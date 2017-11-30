@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="col-lg-3">
+				<select class="selectpicker form-control" 
+						data-actions-box="true" 
+						data-bind="options: products, 
+								   optionsCaption: 'Select A Product',
+								   optionsText: function(item) {
+								   		return item.product_name
+								   },
+								   value: selectedProduct,
+								   event: {change: onConditionChange}">
+				</select>
+			</div>
+			
+			<div class="col-lg-3">
+				<input type="text" class="form-control" placeholder="Start Date" id="datepicker-start-date" data-bind="value: startDate,
+																													  event: {change: onConditionChange}" />
+			</div>
+			
+			<div class="col-lg-3">
+				<input type="text" class="form-control" placeholder="End Date" id="datepicker-end-date" data-bind="value: endDate,
+																													  event: {change: onConditionChange}" />
+			</div>
+		</div>
+	</div>
+	
+	<p />
+
+
+	<div class="row" data-bind="if: dpu_data()">
+		<div class="col-lg-12" data-bind="value : showModalDetail(dpu_data())">
+				<div class="widget-chart text-center" id="dpu_graph" data-bind="value: showChart(dpu_data())">
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+	     <div class="modal-dialog modal-full" data-bind="if : focusData">
+	             <div class="modal-body">
+					 <div data-bind="attr: {id: focusData().graphDomID}"></div>
+	                 <hr>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card-box table-responsive">
+                            <h4 class="m-t-0 header-title">
+                            		<b>Detail Data</b>
+                            	</h4>
+                            <p class="text-muted font-13 m-b-30">
+<!--                                 The Buttons extension for DataTables provides a common set of options, API methods and
+                                styling to display buttons on a page that will interact with a DataTable.  -->
+                            </p>
+
+							<table id="datatable-buttons" class="table table-striped table-bordered">
+							     <thead>
+							     	<tr data-bind="foreach: focusData().tableColumnNames">
+							     		<th data-bind="text: $data"></th>
+							     	</tr>
+							     </thead>
+							     <tbody data-bind="foreach: focusData().rows">
+							       	<tr data-bind="foreach: $root.focusData().tableColumns">
+							        		<td data-bind="text: $parent[$data]"></td>
+							        </tr>
+							     </tbody>
+							</table>
+                        </div>
+                        <div data-bind="value : renderDatatable()"></div>
+                    </div>
+                </div>
+	             </div>
+	             
+	         </div>
+	     </div>
+	 </div>
+</div>
+<script src="{{STATIC_URL}}js/revenue.js"></script>
+{% endblock main %}

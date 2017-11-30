@@ -1,0 +1,10 @@
+<p>
+	<img onclick="this.setAttribute('src','/accounts/captcha/?nocache='+Math.random());" src="/accounts/captcha/" alt="Captcha"/>	
+</p>
+
+<div class="form-group">
+	<div class="col-xs-12">
+		{{ form.captcha.errors|safe }}
+		{{ form.captcha }}
+	</div>
+</div>
